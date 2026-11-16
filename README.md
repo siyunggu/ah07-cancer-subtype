@@ -54,46 +54,32 @@ AI 헬스케어 7기 해커톤 · **유전자 변이 정보 기반 암 아형(SU
 
 ## 폴더 구조
 
-> 아래는 주요 경로 중심의 안내입니다. 팀 해커톤에서 사용한 코드·실험 기록은 유지하며, 포트폴리오 설명은 별도 섹션으로 구분했습니다.
+| 경로 | 내용 | 수정하는 사람 | 깃허브 |
+|---|---|---|---|
+| `docs/coding_rules.md` | 팀 코딩 규칙 (누수 방지, 공통 함수, 실험 순서) | ① 장성은 | 올림 |
+| `data/` | 대회 csv 3개 (각자 넣기) | - | **안 올림** |
+| `src/config.py` | seed, fold 수, 경로 | ④ 박유정 | 올림 |
+| `src/data_loader.py` | 데이터 불러오기 | ④ 박유정 | 올림 |
+| `src/preprocessing.py` | 기본 전처리 (WT=0, 변이=1) | ② 홍시윤 | 올림 |
+| `src/features.py` | **검증된** 공통 피처 | ② 홍시윤 | 올림 |
+| `src/validation.py` | 공통 교차검증 (fold, run_cv) | ③ 안주형 | 올림 |
+| `src/evaluation.py` | Macro F1, 클래스별 F1, 실험 기록 | ③ 안주형 | 올림 |
+| `src/prediction.py` | 제출 파일 만들기 | ④ 박유정 | 올림 |
+| `notebooks/J_leader/` | 00_baseline (팀 기준 점수) | ① 장성은 | 올림 |
+| `notebooks/H_data/` | 01_eda, 02_features | ② 홍시윤 | 올림 |
+| `notebooks/A_model/` | 03_models, 05_ensemble | ③ 안주형 | 올림 |
+| `notebooks/P_light/` | 04_lightweight | ④ 박유정 | 올림 |
+| `experiments/log_*.csv` | 실험 기록 (사람별 1개) | 각자 자기 파일 | 올림 |
+| `experiments/preds/` | 앙상블 후보의 예측 확률 (`save_predictions()`) | 각자 자기 파일 | 올림 |
+| `reports/figures/` | 발표용 그래프 | 전원 | 올림 |
+| `submit/final_solution.ipynb` | 최종 제출 파일 틀 (각자 자기 칸만 채움) | ④ 박유정 | 올림 |
+| `docs/team_plan.md` | 팀 운영 확정본 (역할·일정·규칙) | ① 장성은 | 올림 |
+| `docs/ngs_research.md` | NGS·유전체 조사 | ② 홍시윤 | 올림 |
+| `docs/service_plan.md` | 서비스 기획 | ① 장성은 | 올림 |
+| `models/` | 학습된 모델 파일 | - | **안 올림** |
+| `submissions/` | 제출 csv | - | **안 올림** |
 
-| 경로 | 역할 |
-|---|---|
-| `submit/final_solution.ipynb` | 최종 제출 모델의 전처리·학습·앙상블·후처리·CSV 생성 |
-| `src/config.py`, `src/data_loader.py` | 공통 설정과 데이터 로딩 |
-| `src/preprocessing.py` | WT·결측과 변이 표기의 이진 인코딩 |
-| `src/features.py` | 변이 수, 변이 유형, 아미노산 치환 쌍, 절단형 변이 피처 함수 |
-| `src/validation.py`, `src/evaluation.py` | 공통 교차검증, Macro F1 평가, 실험·예측 결과 기록 |
-| `src/prediction.py` | 제출 파일 생성 |
-| `notebooks/J_leader/` | 기준 모델과 팀 운영 관련 실험 |
-| `notebooks/H_data/` | Train EDA, 피처 엔지니어링, hotspot·position-bin·ablation·변이 피처 실험 |
-| `notebooks/A_model/` | 모델 학습 및 앙상블 실험 |
-| `notebooks/P_light/` | 경량 모델 및 후처리 실험 |
-| `experiments/` | 실험 결과표, 모델별 예측 확률 및 관련 기록 |
-| `docs/` | 팀 규칙, 프로젝트 계획, 유전체·변이 관련 조사 문서 |
-| `scripts/` | 고정 홀드아웃 분할 및 검증 보조 스크립트 |
-| `reports/` | 분석 결과·발표 자료 |
-| `data/` | 로컬 대회 데이터 및 분할 관련 파일(원본 CSV는 저장소에 포함하지 않음) |
-| `models/`, `submissions/` | 로컬 학습 모델과 제출 CSV 저장 경로(일반적으로 Git에 포함하지 않음) |
-| `requirements.txt` | 최종 Colab 환경의 Python 라이브러리 버전 |
-
-### 팀 결과와 개인 정리의 구분
-
-- **팀 프로젝트 결과:** `submit/final_solution.ipynb`, 최종 LB Macro F1 **0.43631**, 기존 실험 노트북과 협업 기록은 해커톤 당시 팀 결과입니다.
-- **개인 기여:** 데이터 EDA, 공통 변이 전처리·피처 함수, 피처 조합 실험, hotspot/position-bin 검증, 특정 암종 오분류·ablation 분석, 관련 기술 조사 문서 작성. 자세한 근거는 아래 PR 링크를 참고하세요.
-- **포트폴리오용 정리:** 이 README의 폴더 안내 및 개인 기여 설명은 프로젝트 종료 후 이해를 돕기 위해 추가한 문서화입니다. 새로운 모델 성능이나 해커톤 제출 결과가 아닙니다.
-
-### 개인 기여 근거 (홍시윤)
-
-| 영역 | 작업 및 근거 |
-|---|---|
-| 데이터 분석·피처 구성 | [PR #8](https://github.com/jsejj87/ah07-cancer-subtype/pull/8), [#26](https://github.com/jsejj87/ah07-cancer-subtype/pull/26): Train EDA와 이진·변이 수·변이 유형·치환 쌍 등 피처 실험 |
-| 공통 피처 코드 | [PR #17](https://github.com/jsejj87/ah07-cancer-subtype/pull/17): `src/features.py` 및 피처 실험 정리 |
-| Hotspot·위치 구간 | [PR #29](https://github.com/jsejj87/ah07-cancer-subtype/pull/29), [#43](https://github.com/jsejj87/ah07-cancer-subtype/pull/43): LR 기준 hotspot×3 + position-bin 조합 CV Macro F1 **0.5085 ± 0.0094**(해당 실험 조건의 CV 점수, 최종 LB 점수 아님) |
-| 오류·한계 분석 | [PR #48](https://github.com/jsejj87/ah07-cancer-subtype/pull/48), [#51](https://github.com/jsejj87/ah07-cancer-subtype/pull/51), [#52](https://github.com/jsejj87/ah07-cancer-subtype/pull/52): 충돌 패턴, 특정 암종 피처 ablation, fold 비교 |
-| 추가 피처 실험 | [PR #54](https://github.com/jsejj87/ah07-cancer-subtype/pull/54): 변이 유형·다중 히트·missense 피처의 모델별 효과 검증 |
-| 문서·품질 관리 | [PR #46](https://github.com/jsejj87/ah07-cancer-subtype/pull/46), [#44](https://github.com/jsejj87/ah07-cancer-subtype/pull/44): 유전체 개념 조사 및 팀 규칙에 따른 노트북 출력 정리 |
-
-> **기여도 해석:** 위 PR은 작업 제출의 근거이며, 코드의 모든 줄을 단독 작성했거나 최종 앙상블을 혼자 설계했다는 뜻은 아닙니다. 최종 제출 모델은 팀 공동 결과입니다. 일부 추가 피처는 검증 후 최종 모델에 채택되지 않았습니다.
+실험 기록 파일: `log_J_leader.csv` · `log_H_data.csv` · `log_A_model.csv` · `log_P_light.csv`
 
 ## 시작하기
 
@@ -155,7 +141,7 @@ save_predictions(owner="A_model", name="xgb_depth8", oof_proba=cv["oof_proba"],
 
 **재현성 주의** (최종 코드 검증에서 점수가 재현돼야 해요)
 - 모든 모델에 `random_state=SEED` (CatBoost는 `random_seed=SEED`)를 넣어요.
-- LightGBM의 `deterministic=True, force_row_wise=True`는 재현성 개선을 위한 권장 설정입니다. **최종 제출 노트북의 LGBM_PARAMS에는 포함되지 않았으며**, 제출 결과와 차이가 발생해 최종본에는 반영하지 않았습니다.
+- LightGBM은 `deterministic=True, force_row_wise=True`를 같이 넣어요 (멀티스레드에서 결과가 미세하게 달라질 수 있어요).
 - 최종 제출에 쓸 모델은 GPU 말고 CPU로 학습해요.
 
 ## 브랜치와 PR
